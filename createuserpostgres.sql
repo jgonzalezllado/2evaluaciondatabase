@@ -33,3 +33,37 @@ psql -h localhost -U jane -p 5432 frankdb
 )
 
 ipa
+
+// base de datos divididas en schema  
+// tambien tener permiso usage
+//permisos sobre la tabla, ejemplo select
+
+
+dropdb "janedb"
+dropdb "frankdb"
+
+dropuser janed
+dropuser frank
+
+//te los crea sin permisos
+CREATE USER frank WITH SUPERUSER PASSWORD 'alualualu';
+CREATE ROLE jane WITH NOSUPERUSER PASSWORD 'alualualu'; // EQUIVALENTE CREAR USUARIO CON COMANDO DE LINUX ROLE HACE REFERENCOA AL USER Y GRUPOS
+CREATE DATABASE janedb WITH OWNER jane; // CREAR ESPECIFICANDO DUEÑO
+vi // es un editor de texto mas primitivo que lo tiene cualquier sistema unix y LINUX
+:wq! quitar 
+
+hay que dar permiso de conecta
+alter user jane with login;//permisos login
+
+\i //importa archivo \i /home/julia/jane.sql 
+
+cat // te enseña el contenido de una archivo
+
+dump // como usuario postgres pg_dump // o nombre de archivo// janedb > kk.sql ( pasarlo aotro archivo)// vuelca por pantalla toda la base de datos  
+
+psql algo ( conecta como posrtgres a la base de datos)
+
+AS user postgres in the OS:
+pg_dump frankdb > frankdb.sql
+createdb frankies -O jane
+psql frankies < frankdb.sql
