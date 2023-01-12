@@ -77,3 +77,29 @@ CREATE DATABASE DROP DATABASE CREAT TABLE DROP TABLE INSERT UPDATE DELETE
 ON DELETE CASCADE , ON DELETE RESTRICT UPDATE CASCADE 
 
 DELETE FROM ALUMNOS WHERE NIF='111111A';
+
+create index index_asignaturas_alumnos on asignaturas (codigo);
+
+
+//tema 6
+
+querying tables
+
+cp ~/ (copia directorio home al usuario)
+
+ostgres@AURA04:~$ pwd
+/var/lib/postgresql
+postgres@AURA04:~$ ls
+14  kk.sql  q  samplecompany_postgresql.sql
+postgres@AURA04:~$ psql
+psql (14.5 (Ubuntu 14.5-0ubuntu0.22.04.1))
+Type "help" for help.
+
+postgres=# \i samplecompany_postgresql.sql
+
+
+select name, surname, salary, salary *1.20 as ‘salary20’ from employees;
+
+select * from employees as E, departments as D where E.dept_num = D.num;
+
+select E.name, E.surname, E.start_date, E.salary, D.name as dept_name from employees as E, departments as D where E.dept_num = D.num;
