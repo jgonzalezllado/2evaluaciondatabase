@@ -101,5 +101,6 @@ postgres=# \i samplecompany_postgresql.sql
 select name, surname, salary, salary *1.20 as ‘salary20’ from employees;
 
 select * from employees as E, departments as D where E.dept_num = D.num;
-
+select name, surname from employees order by surname asc, name desc;
 select E.name, E.surname, E.start_date, E.salary, D.name as dept_name from employees as E, departments as D where E.dept_num = D.num;
+
