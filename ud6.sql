@@ -35,4 +35,13 @@ from employees);
 
 select * from departments where num in (10,15,25);
 
-union
+union te duplica los resultados
+
+intersect los que esten arriba y abajo a la vez
+
+select distint saldran todos los empleados que son managers
+
+
+except es la resultados
+que no estan en la siguiente lista
+se resta 
