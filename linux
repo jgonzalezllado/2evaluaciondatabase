@@ -1,0 +1,49 @@
+cd / home
+ves los usuarios
+cat / etc/passwd
+
+
+adduser alejandro / dara error de root
+ponemos sudo adduser alejandro
+pwd // saber directorio
+
+cd Escritorio
+
+sudo cp samplecompany* /home/alejandro
+cd
+
+su transofrma en root
+sudo su transforma en root
+
+canbiar user
+
+su - alejandro
+
+cat nombrearchivo //muestra nombre archivo
+chown cambia la propiedad
+chown alejandro:alejandro samplecompany*  / cambiar dueño
+ls -al
+
+chmod 777
+
+deluser alejandro
+
+cat /etc/passwd  /consuktar directorio postgres u otros
+
+sudo cp * .sql /var/lib/postgresql  esto lo copia al directorio
+
+cd /var/lib/postgresql
+sudo chown postgres: postgres * .sql   postgres es el usuario
+man chown
+
+chmod 
+
+r read w write x ejecutar es meterse dentro
+usuario grupo otros
+1 es dar permiso 0 es negarlo
+
+chmod 401 file.sql  para asignar lospermisos en base al binario
+
+ls -al archivo.sql para ver quien es el dueño o ver permisos
+touch kk.sh
+chmod 
