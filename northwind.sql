@@ -43,3 +43,20 @@ WHERE p.UnitsInStock = 0;
 
 
 
+22.
+
+
+
+SELECT s.CompanyName, 
+COUNT(o.OrderID) as NumOrders
+FROM Shippers s, Orders o
+WHERE s.ShipperID = o.ShipVia
+GROUP BY s.CompanyName
+ORDER BY NumOrders DESC;
+
+19.
+
+select
+count(City) as NumberBCN
+from Customers
+where City = 'Barcelona';
