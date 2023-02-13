@@ -308,3 +308,335 @@ Order by num_movies DESC;
 ---------------------------
 
 
+
+
+
+
+
+1.- Data of all the actors with surname 'Willis'
+ ordered by last_name and first_name.
+
+ select * from actors
+ where last_name = 'Willis'
+ order by last_name, first_name;
+
+
+2. Code and title of the movies that in its title there 
+are some of the following words: "kill", "pirates", "war", "man". 
+Order the result by movie title.
+
+select DISTINCT 
+m.id, m.name
+from movies m
+where m.name LIKE ' %kill' 
+OR m.name LIKE 'kill %'
+OR m.name LIKE '%kill'
+OR m.name LIKE '%KILL %'
+OR m.name LIKE 'man %'
+OR m.name LIKE '%man'
+OR m.name LIKE '%man %'
+OR m.name LIKE ' %man'
+OR m.name LIKE 'war %'
+OR m.name LIKE '%war'
+OR m.name LIKE '%war %'
+OR m.name LIKE ' %war'
+OR m.name LIKE 'pirates %'
+OR m.name LIKE '%pirates'
+OR m.name LIKE '%pirates %'
+OR m.name LIKE ' %pirates'
+order by m.name;
+
+
+
+
+
+7. Full name of the actors with whom Uma Thurman worked. Also indicate the full 
+name and the year of the premiere of the film in the movie with title 'Kill Bill: Vol. 1'. 
+Order the results by movie name and actor full name. Obviously, Uma Thurman must not be in the results.
+
+actor_name movie_tittle year
+
+
+select
+CONCAT(a.first_name, ' ', a.last_name) as actor_name,
+m.name, 
+m.year
+from actors a, roles r, movies m
+where a.id = r.actor_id AND
+r.movie_id = m.id AND 
+NOT 
+(a.first_name = 'Uma' AND
+a.last_name = 'Thurman') AND 
+m.name = 'Kill Bill: Vol. 1'
+order by m.name, actor_name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+. Title and year of premiere of all those films that we 
+do not know the director. order the results by film title. 
+The title of the movie must begin with 'W'.
+ Order the results by title of the movie. 
+(clue: NOT IN (subselect)).
+
+
+SELECT m.name AS title, m.year AS year_of_premiere
+FROM movies m
+WHERE m.id NOT IN (
+  SELECT movie_id
+  FROM movies_directors
+)
+AND m.name LIKE 'W%'
+ORDER BY title;
+
+
+6. Name of the director, premiere year and full 
+name and roles of the actors in the movie 
+"Lost in Translation". Sort the result by actors' full name.
+
+select
+CONCAT(a.first_name,' ',a.last_name) as actor_name,
+m.year, r.role,
+CONCAT(d.first_name, ' ',d.last_name) as director_name
+from actors a, roles r, movies m, movies_directors md, directors d 
+where a.id = r.actor_id AND r.movie_id = m.id and m.id = md.movie_id and
+md.director_id = d.id and 
+m.name = 'Lost in Translation'
+order by actor_name;
+
+
+
+
+
+7. Full name of the actors with whom Uma Thurman worked.
+ Also indicate the full name and the year of the premiere of the 
+ film in the movie with title 'Kill Bill: Vol. 1'. 
+ Order the results by movie name and actor full name. Obviously, 
+Uma Thurman must not be in the results.
+
+SELECT
+CONCAT(a.first_name, ' ', a.last_name) as actor_name, 
+m.name, m.year
+from actors a, roles r, movies m 
+where a.id = r.actor_id and r.movie_id = m.id 
+and a.first_name !='Uma' 
+and a.last_name !='Thurmam'
+and m.name = 'Kill Bill: Vol. 1'
+order by m.name, actor_name;
+
+
+Number of movies directed by Quentin Tarantino.
+
+SELECT 
+concat(d.first_name, ' ', d.last_name) as director_name,
+count(md.movie_id) as num_movies
+from movies m, movies_directors md, directors d 
+where m.id = md.movie_id and md.director_id = d.id
+and d.first_name = 'Quentin'
+and d.last_name = 'Tarantino'
+;
+
+
+
+
+-------------------------------
+
+1.- Data of all the actors with surname 'Willis' 
+ordered by last_name and first_name.
+
+select * from 
+actors 
+where last_name = 'Willis'
+order by last_name, first_name;
+
+
+. Code and title of the movies that in its title t
+here are some of the following words: "kill", "pirates", "war", "man".
+ Order the result by movie title.
+
+
+select 
+m.id, m.name as title 
+from movies m 
+where m.name like ' kill%' 
+or m.name like '%kill%'
+order by title;
+
+
+
+List of actors with surname starting with a ‘Puent’, 
+indicating the number of films in which they have participated, 
+ordered by the number of films descendent. 
+
+
+first_name last_name num_movies
+
+select 
+a.first_name, a.last_name,
+count(r.movie_id) as count_movies
+from actors a, roles r
+where a.id = r.actor_id 
+and a.last_name like 'Puent%'
+group by a.first_name, a.last_name
+order by count_movies;
+
+
+
+
+
+
+
+
+
+
+
+ Full name of the actors with whom 
+ Uma Thurman worked in the movie 'Kill Bill: Vol. 1'.
+ Also show the year of premiere. Order the results by
+  movie name and actor full name. 
+ Obviously, Uma Thurman must not be in the results.
+
+
+actor_name, movie_title, year 
+
+SELECT 
+concat(a.first_name, ' ', a.last_name) as actor_name,
+m.year, m.name as movie_title 
+from actors a, roles r, movies m 
+where a.id = r.actor_id
+and r.movie_id = m.id 
+and m.name = 'Kill Bill: Vol. 1'
+and a.first_name != 'Uma'
+and a.last_name != 'Thurman'
+group by actor_name 
+order by actor_name, movie_title;
+
+8. Title of the movies directed by Quentin Tarantino. 
+Sort the result by year and title.
+
+select m.name, m.year 
+from movies m, movies_directors md, directors d 
+where m.id = md.movie_id and md.director_id = d.id 
+and d.first_name = 'Quentin'
+and d.last_name = 'Tarantino'
+order by m.year, m.name;
+
+
+
+0. List of actors with surname starting with a 
+‘Puent’, indicating the number of films in which they have participated,
+ ordered by the number of films descendent
+ first_name last_NAME NUM_MOVIES
+
+ select 
+ a.first_name, a.last_name,
+ count(*) as num_movies 
+ from actors a, roles r
+ where a.id = r.actor_id 
+ and a.last_name like 'puent%'
+ group by a.first_name, a.last_name
+ order by num_movies desc;
+
+
+
+
+  Name of the director, premiere year and full 
+  name and roles of the actors in the movie "Lost in Translation". 
+  Sort the result by actors' full name.
+
+  director_name ,movie_title, year, actor_name, role
+
+  select 
+  concat(d.first_name, ' ', d.last_name) as director_name,
+  m.name as movie_title, m.year,
+  concat(a.first_name,' ', a.last_name) as actor_name,
+  r.role
+  from actors a, roles r, movies m, movies_directors md, 
+  directors d
+  where r.actor_id = a.id and r.movie_id = m.id and m.id = md.movie_id and
+  md.director_id = d.id
+  and m.name = 'Lost in Translation'
+  group by director_name, actor_name
+  order by actor_name;
+
+
+
+
+5. Title and year of premiere of all those 
+films that we do not know the director. order the results by film title. 
+The title of the movie must begin with 'W'. 
+Order the results by title of the movie. (clue: NOT IN (subselect)).
+
+
+id, year, title
+
+select m.id, m.name as title, m.year
+from movies m
+where m.id NOT IN (
+
+  select movie_id
+  from movies_directors md
+)
+and m.name like 'W%'
+order by title;
+
+
+
+
+16.- Products above average price (ordered by price descendent).
+product id product name unit price
+
+
+
+select P.product_id, P.product_name, p.uni
+
+select p.Product_id, p.Product_name
+
+
+SELECT p.Product_id, p.Product_name, od.Unit_Price
+FROM `Order Details` od, Products p
+WHERE md.Unit_price > (SELECT AVG(md.unit_price) FROM `Order Details`)
+and P.ProductID = od.ProductID
+ORDER BY unit_price DESC;
+
+
+tabla Orders, Shippers, Employees, Customers, Order Details, Products, Categories, Suppliers
+
+
+
+
+
+
+select 
+p.ProductID, p.ProductName, p.UnitPrice
+from Products p
+Order by p.UnitPrice DESC
+LIMIT 10;
+
+select od.OrderID, o.OrderDate, o.RequiredDate, c.CustomerID, c.Address,
+c.City, c.Region, c.PostalCode, c.Country, o.ShippedDate, c.CompanyName,
+o.Freight, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry,
+CONCAT(e.FirstName, ' ', e.LastName) AS `Sales Person`
+FROM `Order Details` od, Orders o, Customers c, Employees e
+WHERE od.OrderID = o.OrderID AND o.EmployeeID = e.EmployeeID AND
+od.OrderID = '10248'
+GROUP BY od.OrderID
+
+
+SELECT p.product_id, p.product_name, od.unit_price
+FROM Products p, `Order_details` od
+JOIN order_details od ON p.product_id = od.product_id
+WHERE od.unit_price > (SELECT AVG(unit_price) FROM `order_details`)
+ORDER BY od.unit_price DESC
+LIMIT 10;
